@@ -1,30 +1,37 @@
+const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  devServer: {
-    // Display only errors to reduce the amount of output.
-    stats: "errors-only",
+const parts = require('./webpack.parts.js');
 
-    // Parse host and port from env to allow customization.
-    //
-    // If you use Docker, Vagrant or Cloud9, set
-    // host: options.host || "0.0.0.0";
-    //
-    // 0.0.0.0 is available to all network devices
-    // unlike default `localhost`.
-    host: process.env.HOST,   // Defaults to `localhost`
-    port: process.env.PORT,   // Defaults to 8080
+const commonConfig = merge([
+  {
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'webpack demo'
+      })
+    ]
+  }
+]);
 
-    open: true,               // Open the page in browser
-    // historyApiFallback: true, // use HTML5 API based routing
+const productionConfig = merge([]);
 
-    overlay: true,            // cpature compoilation related warning/errors
-    // [*] overlay does not seem to work possible related to
-    //     https://github.com/smooth-code/error-overlay-webpack-plugin/issues/8
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'webpack demo'
-    })
-  ]
+const developmentConfig = merge([
+  parts.devServer({
+    // Customize host/port here if needed
+    host: process.env.HOST,
+    port: process.env.PORT,
+  })
+]);
+
+
+module.exports = env => {
+  const _out;
+
+  if (env === 'production') {
+    _out = merge(commonConfig, productionConfig, {mode:env});
+  }
+
+  _out = merge(commonConfig, developmentConfig, {mode:env});
+
+  return _out;
 }
