@@ -1,2 +1,4 @@
-import component from "./component";
-document.body.appendChild(component());
+import component from "./component"
+
+import './main.css'
+document.body.appendChild(component())

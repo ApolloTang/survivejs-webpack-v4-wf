@@ -20,12 +20,12 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: process.env.HOST,
     port: process.env.PORT,
-  })
+  }),
+  parts.loadCss()
 ]);
 
-
 module.exports = env => {
-  const _out;
+  let _out;
 
   if (env === 'production') {
     _out = merge(commonConfig, productionConfig, {mode:env});

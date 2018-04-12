@@ -24,3 +24,17 @@ exports.devServer = ({ host, port } = {}) => {
   };
   return _out;
 }
+
+
+exports.loadCss = ({ include, exclude } = {}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        include,
+        exclude,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  }
+});
