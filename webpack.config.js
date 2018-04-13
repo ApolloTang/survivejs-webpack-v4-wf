@@ -13,7 +13,11 @@ const commonConfig = merge([
   }
 ]);
 
-const productionConfig = merge([]);
+const productionConfig = merge([
+  parts.extractCss({
+    use: ['css-loader','postcss-loader', 'less-loader']
+  })
+]);
 
 const developmentConfig = merge([
   parts.devServer({
@@ -31,7 +35,13 @@ module.exports = env => {
     _out = merge(commonConfig, productionConfig, {mode:env});
   }
 
-  _out = merge(commonConfig, developmentConfig, {mode:env});
+  if (env === 'debug') {
+    _out = merge(commonConfig, productionConfig, {mode:'development'});
+  }
+
+  if (env === 'development') {
+    _out = merge(commonConfig, developmentConfig, {mode:env});
+  }
 
   return _out;
 }
