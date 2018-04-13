@@ -30,10 +30,10 @@ exports.loadCss = ({ include, exclude } = {}) => ({
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(css|less)$/,
         include,
         exclude,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   }

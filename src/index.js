@@ -1,4 +1,4 @@
 import component from "./component"
 
-import './main.css'
+import './main.less'
 document.body.appendChild(component())
