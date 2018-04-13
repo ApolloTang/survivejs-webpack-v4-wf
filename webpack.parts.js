@@ -28,6 +28,16 @@ exports.devServer = ({ host, port } = {}) => {
   return _out;
 }
 
+const cssLoaderConf = {
+  loader: 'css-loader',
+  options: {
+    importLoaders: 2
+    // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
+    // The disccus in the following ref is confusing:
+    // https://github.com/webpack-contrib/css-loader/issues/228
+  }
+}
+
 
 exports.loadCss = ({ include, exclude } = {}) => ({
   module: {
@@ -38,15 +48,7 @@ exports.loadCss = ({ include, exclude } = {}) => ({
         exclude,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2
-              // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
-              // The disccus in the following ref is confusing:
-              // https://github.com/webpack-contrib/css-loader/issues/228
-            }
-          },
+          cssLoaderConf,
           'postcss-loader',
           'less-loader'
         ]
@@ -56,7 +58,7 @@ exports.loadCss = ({ include, exclude } = {}) => ({
 });
 
 
-exports.extractCss = ({ include, exclude, use }) => {
+exports.extractCss = ({ include, exclude } = {}) => {
   const plugin = new ExtractTextPlugin({
     // `allChunks` is needed to extract from extracted chunks as well.
     allChunks: true,
@@ -71,8 +73,12 @@ exports.extractCss = ({ include, exclude, use }) => {
            include,
            exclude,
            use: plugin.extract({
-             use,
-             fallback: "style-loader"
+             use: [
+              cssLoaderConf,
+              'postcss-loader',
+              'less-loader'
+            ],
+            fallback: "style-loader"
            }),
          },
        ]
