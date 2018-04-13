@@ -33,7 +33,20 @@ exports.loadCss = ({ include, exclude } = {}) => ({
         test: /\.(css|less)$/,
         include,
         exclude,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+              // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
+              // The disccus in the following ref is confusing:
+              // https://github.com/webpack-contrib/css-loader/issues/228
+            }
+          },
+          'postcss-loader',
+          'less-loader'
+        ]
       }
     ]
   }
