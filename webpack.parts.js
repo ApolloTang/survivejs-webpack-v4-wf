@@ -1,5 +1,6 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const PurifyCssPlugin = require('purifycss-webpack')
 
 exports.devServer = ({ host, port } = {}) => {
   const _out = {
@@ -36,6 +37,14 @@ const cssLoaderConf = {
     // The disccus in the following ref is confusing:
     // https://github.com/webpack-contrib/css-loader/issues/228
   }
+}
+
+
+exports.purifyCss = ({paths} = {}) => {
+  const _out = {
+    plugins: [new PurifyCssPlugin({paths})]
+  }
+  return _out
 }
 
 
