@@ -1,4 +1,3 @@
-
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PurifyCssPlugin = require('purifycss-webpack')
 
@@ -40,9 +39,9 @@ const cssLoaderConf = {
 }
 
 
-exports.purifyCss = ({paths} = {}) => {
+exports.purifyCss = ({paths, purifyOptions} = {}) => {
   const _out = {
-    plugins: [new PurifyCssPlugin({paths})]
+    plugins: [new PurifyCssPlugin({paths, purifyOptions})]
   }
   return _out
 }

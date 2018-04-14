@@ -23,6 +23,15 @@ const commonConfig = merge([
 const productionConfig = merge([
   parts.extractCss(),
   parts.purifyCss({
+    paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
+    purifyOptions: {minify: true}
+  })
+]);
+
+
+const debugConfig = merge([
+  parts.extractCss(),
+  parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
   })
 ]);
@@ -46,7 +55,7 @@ module.exports = env => {
   }
 
   if (env === 'debug') {
-    _out = merge(commonConfig, productionConfig, {mode:'development'});
+    _out = merge(commonConfig, debugConfig, {mode:'development'});
   }
 
   if (env === 'development') {
