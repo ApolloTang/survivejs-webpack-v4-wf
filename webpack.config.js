@@ -25,7 +25,8 @@ const productionConfig = merge([
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     purifyOptions: {minify: true}
-  })
+  }),
+  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 
@@ -33,7 +34,8 @@ const debugConfig = merge([
   parts.extractCss(),
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
-  })
+  }),
+  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 
@@ -43,7 +45,8 @@ const developmentConfig = merge([
     host: process.env.HOST,
     port: process.env.PORT,
   }),
-  parts.loadCss()
+  parts.loadCss(),
+  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 

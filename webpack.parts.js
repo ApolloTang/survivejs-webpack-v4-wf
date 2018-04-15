@@ -93,3 +93,18 @@ exports.extractCss = ({ include, exclude } = {}) => {
     plugins: [plugin],
   }
 }
+
+
+exports.loadJavaScript = ({ include, exclude } = {}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include,
+        exclude,
+        use: "babel-loader",
+      },
+    ],
+  },
+});
+
