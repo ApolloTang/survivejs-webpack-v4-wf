@@ -72,24 +72,23 @@ exports.extractCss = ({ include, exclude } = {}) => {
     allChunks: true,
     filename: "[name].css",
   });
-
   return {
-     module: {
-       rules: [
-         {
-           test: /\.(css|less)$/,
-           include,
-           exclude,
-           use: plugin.extract({
-             use: [
-              cssLoaderConf,
-              'postcss-loader',
-              'less-loader'
-            ],
-            fallback: "style-loader"
-           }),
-         },
-       ]
+    module: {
+      rules: [
+        {
+          test: /\.(css|less)$/,
+          include,
+          exclude,
+          use: plugin.extract({
+            use: [
+             cssLoaderConf,
+             'postcss-loader',
+             'less-loader'
+           ],
+           fallback: "style-loader"
+          }),
+        },
+      ]
     },
     plugins: [plugin],
   }
