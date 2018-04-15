@@ -10,6 +10,7 @@ const PATHS = {
 }
 
 const commonConfig = merge([
+  parts.loadJavaScript({ include: PATHS.app }),
   {
     entry: ['@babel/polyfill', PATHS.app],
     plugins: [
@@ -17,7 +18,7 @@ const commonConfig = merge([
         title: 'webpack demo'
       })
     ]
-  }
+  },
 ]);
 
 
@@ -27,7 +28,6 @@ const productionConfig = merge([
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     purifyOptions: {minify: true}
   }),
-  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 
@@ -36,7 +36,6 @@ const debugConfig = merge([
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
   }),
-  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 
@@ -47,7 +46,6 @@ const developmentConfig = merge([
     port: process.env.PORT,
   }),
   parts.loadCss(),
-  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 
