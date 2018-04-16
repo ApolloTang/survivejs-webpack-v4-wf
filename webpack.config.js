@@ -6,14 +6,20 @@ const glob = require('glob')
 const parts = require('./webpack.parts.js');
 
 const PATHS = {
-  app: path.join(__dirname, 'src')
+  app: path.resolve(__dirname, 'src')
 }
 
 const commonConfig = merge([
   {
-    entry: ['@babel/polyfill', PATHS.app]
+    entry: [
+      // '@babel/polyfill', //<-- disable for now
+      PATHS.app
+    ]
   },
-  parts.loadJavaScript({ include: PATHS.app }),
+  parts.loadJavaScript({
+    include: PATHS.app,
+    exclude: ['node_modules']
+  }),
   {
     plugins: [
       new HtmlWebpackPlugin({
@@ -59,7 +65,7 @@ module.exports = env => {
   }
 
   if (env === 'debug') {
-    _out = merge(commonConfig, debugConfig, {mode:'development'});
+    _out = merge(commonConfig, debugConfig, {mode:'none'});
   }
 
   if (env === 'development') {
