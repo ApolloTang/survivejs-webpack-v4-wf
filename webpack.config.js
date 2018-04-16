@@ -6,8 +6,10 @@ const glob = require('glob')
 const parts = require('./webpack.parts.js');
 
 const PATHS = {
-  app: path.resolve(__dirname, 'src')
+  app: path.resolve(__dirname, 'src'),
+  fonts: path.resolve(__dirname, 'src/assets/fonts')
 }
+
 
 const optimization = {
   optimization: {
@@ -42,6 +44,12 @@ const commonConfig = merge([
       })
     ]
   },
+  parts.loadFonts({
+    include: PATHS.fonts,
+    options: {
+      name: "fonts/[name].[ext]",
+    }
+  }),
 ]);
 
 

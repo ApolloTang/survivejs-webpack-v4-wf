@@ -17,7 +17,7 @@ exports.devServer = ({ host, port } = {}) => {
       host: process.env.HOST,   // Defaults to `localhost`
       port: process.env.PORT,   // Defaults to 8080
 
-      open: true,               // Open the page in browser
+      // open: true,               // Open the page in browser
       // historyApiFallback: true, // use HTML5 API based routing
 
       overlay: true,            // cpature compoilation related warning/errors
@@ -108,3 +108,22 @@ exports.loadJavaScript = ({ include, exclude } = {}) => ({
   },
 });
 
+
+exports.loadFonts = ({ include, exclude, options } = {}) => {
+  const _out = {
+    module: {
+      rules: [
+        {
+          test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
+          include,
+          exclude,
+          use: {
+            loader: "file-loader",
+            options
+          },
+        },
+      ],
+    },
+  }
+  return _out
+};
