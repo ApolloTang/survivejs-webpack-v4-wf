@@ -12,7 +12,13 @@ const PATHS = {
 const optimization = {
   optimization: {
     splitChunks: {
-      chunks: "initial",
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "initial",
+        },
+      },
     },
   },
 }
