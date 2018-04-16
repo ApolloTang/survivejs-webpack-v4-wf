@@ -1,9 +1,12 @@
 import component from './component'
+import fontAwesome from './font-awesome'
+
 import _get from 'lodash/get'
 
 import './assets/fonts/index.js'  // this bootstrap font system
 import './main.less'
 document.body.appendChild(component())
+document.body.appendChild(fontAwesome)
 
 
 
