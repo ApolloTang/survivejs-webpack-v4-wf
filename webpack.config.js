@@ -27,7 +27,7 @@ const optimization = {
 const commonConfig = merge([
   {
     entry: [
-      // '@babel/polyfill', //<-- disable for now
+      '@babel/polyfill', // required for asycn await
       PATHS.app
     ]
   },
