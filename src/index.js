@@ -1,7 +1,9 @@
-import component from "./component"
+import component from './component'
+import _get from 'lodash/get'
 
 import './main.less'
 document.body.appendChild(component())
+
 
 
 // test es6
@@ -11,7 +13,8 @@ class MyClass {
     console.log('MyClass instantiated')
   }
 }
-console.log(MyClass.x)
+console.log(_get(MyClass, 'x', ''))
+
 const myClass = new MyClass()
 
 const a = {a:'a'}

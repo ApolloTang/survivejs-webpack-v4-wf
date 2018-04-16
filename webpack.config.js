@@ -9,6 +9,15 @@ const PATHS = {
   app: path.resolve(__dirname, 'src')
 }
 
+const optimization = {
+  optimization: {
+    splitChunks: {
+      chunks: "initial",
+    },
+  },
+}
+
+
 const commonConfig = merge([
   {
     entry: [
@@ -36,6 +45,7 @@ const productionConfig = merge([
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     purifyOptions: {minify: true}
   }),
+  optimization
 ]);
 
 
@@ -44,6 +54,7 @@ const debugConfig = merge([
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
   }),
+  optimization
 ]);
 
 
