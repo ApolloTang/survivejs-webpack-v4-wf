@@ -1,6 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const PurifyCssPlugin = require('purifycss-webpack')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 exports.devServer = ({ host, port } = {}) => {
   const _out = {
     devServer: {
@@ -66,12 +66,16 @@ exports.loadCss = ({ include, exclude } = {}) => ({
 });
 
 
-exports.extractCss = ({ include, exclude } = {}) => {
+exports.extractCss_ExtractTextPlugin = ({ include, exclude } = {}) => {
+  //*  ExtractTextPlugin will be deprecated, use
+  //*  mini-css-extract-plugin instead, see:
+  //*  https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/749
   const plugin = new ExtractTextPlugin({
     // `allChunks` is needed to extract from extracted chunks as well.
     allChunks: true,
     filename: "[name].css",
   });
+
   return {
     module: {
       rules: [
@@ -88,6 +92,34 @@ exports.extractCss = ({ include, exclude } = {}) => {
            fallback: "style-loader"
           }),
         },
+      ]
+    },
+    plugins: [plugin],
+  }
+}
+
+exports.extractCss_MiniCssExtractPlugin = ({ include, exclude } = {}) => {
+  const plugin = new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: "[name].[hash].css",
+    chunkFilename: "[id].[hash].css"
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.(css|less)$/,
+          include,
+          exclude,
+          use: [
+            MiniCssExtractPlugin.loader,
+            cssLoaderConf,
+            'postcss-loader',
+            'less-loader'
+          ]
+        }
       ]
     },
     plugins: [plugin],

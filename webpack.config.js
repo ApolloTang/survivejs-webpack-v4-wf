@@ -54,7 +54,8 @@ const commonConfig = merge([
 
 
 const productionConfig = merge([
-  parts.extractCss(),
+  // parts.extractCss_ExtractTextPlugin(),
+  parts.extractCss_MiniCssExtractPlugin(),
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
     purifyOptions: {minify: true}
@@ -64,7 +65,8 @@ const productionConfig = merge([
 
 
 const debugConfig = merge([
-  parts.extractCss(),
+  // parts.extractCss_ExtractTextPlugin(),
+  parts.extractCss_MiniCssExtractPlugin(),
   parts.purifyCss({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
   }),
